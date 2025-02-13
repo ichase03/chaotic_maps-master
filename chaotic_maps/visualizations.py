@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.misc import derivative
+# from scipy.misc import derivative
 
 def bifurcation_data_fixed_x(
     f, init, y_points=100, dropped_steps=2000, lyapunov=False, deriv=None, **kwargs
@@ -18,9 +18,9 @@ def bifurcation_data_fixed_x(
         res[i] = x
 
         if lyapunov:
-            if deriv is None:
-                lyap += np.log(np.absolute(derivative(f, x)))
-            else:
+            # if deriv is None:
+            #     lyap += np.log(np.absolute(derivative(f, x)))
+            # else:
                 lyap += np.log(np.absolute(deriv(x)))
 
     lyap /= dropped_steps + y_points

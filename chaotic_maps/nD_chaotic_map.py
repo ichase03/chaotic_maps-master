@@ -159,7 +159,13 @@ def mod_4d_TBMHM_Jac( parameters ):
     ])
     return Jac
 
+def Logistic_map_new(parameters):
+    x = parameters[0]
+    mu = parameters[1]
+    return np.array (( mu * x * (1 - x) , mu))
 
 
-
-
+def Logistic_map_deriv_new(parameters):
+    x = parameters[0]
+    mu = parameters[1]
+    return mu*(1-2*x)

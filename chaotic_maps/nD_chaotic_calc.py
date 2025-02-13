@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy
 from tqdm import tqdm  # 导入 tqdm 库
+from joblib import Parallel, delayed
 
 # 返回在某点处的李雅普诺夫指数
 def nD_chaotic_Lya_calc_fixpara( chaotic_map , jacobian , init , n_iterations , chaotic_dim_num ):
@@ -69,6 +70,37 @@ def nD_chaotic_Lya_calc(
         lya_list[i] = lya_res
 
     return lya_list
+
+
+def compute_lya(i, parameter_range, parameter_seqnum, init, chaotic_map, jacobian, n_iterations, chaotic_dim_num):
+    """
+    计算单个参数值对应的 Lyapunov 指数。
+    """
+    init[parameter_seqnum] = parameter_range[i]
+    lya_res = nD_chaotic_Lya_calc_fixpara_new(chaotic_map, jacobian, init, n_iterations, chaotic_dim_num)
+    return lya_res
+
+
+def nD_chaotic_Lya_calc_multiprocessing(
+        chaotic_map,
+        jacobian,
+        init,
+        n_iterations,
+        chaotic_dim_num,
+        parameter_range,
+        parameter_seqnum
+):
+    para_range_len = len(parameter_range)
+
+    # 并行计算
+    lya_list = Parallel(n_jobs=-1)(  # n_jobs=-1 表示使用所有可用的 CPU 核心
+        delayed(compute_lya)(i, parameter_range, parameter_seqnum, init, chaotic_map, jacobian, n_iterations,
+                             chaotic_dim_num)
+        for i in tqdm(range(para_range_len), desc="Transient Phase")
+    )
+
+    return lya_list
+
 
 def nD_lya_plot_dim4(
     chaotic_map , jacobian , init , n_iterations , chaotic_dim_num, parameter_range, parameter_seqnum

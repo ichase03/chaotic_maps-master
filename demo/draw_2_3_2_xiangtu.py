@@ -1,65 +1,81 @@
-# # import numpy as np
-# # from scipy.integrate import solve_ivp
-# # import matplotlib.pyplot as plt
-# # from mpl_toolkits.mplot3d import Axes3D
-# #
-# # # Rössler系统的微分方程
-# # def rossler_system(t, state, a, b, c):
-# #     x, y, z = state
-# #     dxdt = -y - z
-# #     dydt = x + a * y
-# #     dzdt = b + z * (x - c)
-# #     return [dxdt, dydt, dzdt]
-# #
-# # # 参数
-# # a, b, c = 0.2, 0.2, 5.7
-# #
-# # # 初始条件
-# # initial_state = [0.0, 2.0, 0.0]
-# #
-# # # 时间范围
-# # t_span = (0, 500)
-# # t_eval = np.linspace(t_span[0], t_span[1], 20000)
-# #
-# # # 求解微分方程
-# # sol = solve_ivp(rossler_system, t_span, initial_state, args=(a, b, c), t_eval=t_eval)
-# #
-# # # 提取解
-# # x, y, z = sol.y
-# #
-# # # 绘制三维相图
-# # fig = plt.figure(figsize=(4, 4))
-# # ax = fig.add_subplot(111, projection='3d')
-# #
-# # # 去掉背景
-# # ax.grid(False)  # 去掉网格
-# # ax.xaxis.pane.fill = False  # 去掉x轴背景面
-# # ax.yaxis.pane.fill = False  # 去掉y轴背景面
-# # ax.zaxis.pane.fill = False  # 去掉z轴背景面
-# #
-# # # 去掉坐标轴背景线
-# # # ax.xaxis.pane.set_edgecolor('w')
-# # # ax.yaxis.pane.set_edgecolor('w')
-# # # ax.zaxis.pane.set_edgecolor('w')
-# #
-# # # 绘制轨迹
-# # ax.plot(x, y, z, lw=0.5, color='b')
-# #
-# # # 设置观测角度
-# # ax.view_init(elev=20, azim=210)  # 仰角20度，方位角30度
-# #
-# # # 设置标签
-# # ax.set_xlabel('X')
-# # ax.set_ylabel('Y')
-# # ax.set_zlabel('Z')
-# # # ax.set_title('Rössler Attractor')
-# #
-# # plt.savefig("PIC_2_3_2_相图.png", dpi=100)
-# # plt.show()
+import numpy as np
+from scipy.integrate import solve_ivp
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+# 全局设置字体为新罗马
+plt.rcParams["font.family"] = "Times New Roman"
+# 全局设置字体和文字大小
+plt.rcParams["font.size"] = 10  # 默认字体大小
+plt.rcParams["axes.titlesize"] = 10  # 标题字体大小
+plt.rcParams["axes.labelsize"] = 10  # 坐标轴标签字体大小
+plt.rcParams["xtick.labelsize"] = 10  # X轴刻度标签字体大小
+plt.rcParams["ytick.labelsize"] = 10  # Y轴刻度标签字体大小
+plt.rcParams["legend.fontsize"] = 10  # 图例字体大小
+
+# Rössler系统的微分方程
+def rossler_system(t, state, a, b, c):
+    x, y, z = state
+    dxdt = -y - z
+    dydt = x + a * y
+    dzdt = b + z * (x - c)
+    return [dxdt, dydt, dzdt]
+
+# 参数
+a, b, c = 0.2, 0.2, 5.7
+
+# 初始条件
+initial_state = [0.0, 2.0, 0.0]
+
+# 时间范围
+t_span = (0, 500)
+t_eval = np.linspace(t_span[0], t_span[1], 20000)
+
+# 求解微分方程
+sol = solve_ivp(rossler_system, t_span, initial_state, args=(a, b, c), t_eval=t_eval)
+
+# 提取解
+x, y, z = sol.y
+
+# 绘制三维相图
+fig = plt.figure(figsize=(6/2.54, 4/2.54))
+ax = fig.add_subplot(111, projection='3d')
+fig.subplots_adjust(left=0, right=1, bottom=0.15, top=0.99)
+# 去掉背景
+ax.grid(False)  # 去掉网格
+ax.xaxis.pane.fill = False  # 去掉x轴背景面
+ax.yaxis.pane.fill = False  # 去掉y轴背景面
+ax.zaxis.pane.fill = False  # 去掉z轴背景面
+
+# 去掉坐标轴背景线
+# ax.xaxis.pane.set_edgecolor('w')
+# ax.yaxis.pane.set_edgecolor('w')
+# ax.zaxis.pane.set_edgecolor('w')
+
+# 绘制轨迹
+ax.plot(x, y, z, lw=0.5, color='b')
+
+# 设置观测角度
+ax.view_init(elev=20, azim=210)  # 仰角20度，方位角30度
+
+# ax.set_xticks([])
+# ax.set_yticks([])
+# ax.set_zticks([])
+# ax.set_axis_off()
+# 设置标签
+# ax.set_xlabel('x')
+# ax.set_ylabel('y')
+# ax.set_zlabel('z')
+# ax.set_title('Rössler Attractor')
+
+# plt.tight_layout()
+plt.savefig("../pic/PIC_2_3_2_相图2.png", dpi=300)
+plt.show()
 # #
 # #
 import numpy as np
 import matplotlib.pyplot as plt
+
 
 # Hénon映射的参数
 a = 1.4
@@ -87,13 +103,14 @@ for _ in range(num_iterations):
     y_values.append(y)
 
 # 绘制相图
-plt.figure(figsize=(4, 3))
+plt.figure(figsize=(6/2.54, 4/2.54))
 plt.scatter(x_values, y_values, s=0.1, color='blue', alpha=0.5)
 # plt.title("Hénon Map")
 plt.xlabel("x")
 plt.ylabel("y")
 plt.subplots_adjust(left=0.17 ,right=0.95, bottom=0.15, top=0.95)
-plt.savefig("PIC_2_3_2_相图1.png", dpi=100)
+
+plt.savefig("../pic/PIC_2_3_2_相图01.png", dpi=300)
 plt.show()
 # #
 # #

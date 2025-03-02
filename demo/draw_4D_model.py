@@ -2,8 +2,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 import chaotic_maps as cm
 
-plt_title_fontsize = 20
-plt_sub_title_fontsize = 18
+plt_title_fontsize = 10
+plt_sub_title_fontsize = 10
+# 全局设置字体为新罗马
+plt.rcParams["font.family"] = "Times New Roman"
+# 全局设置字体和文字大小
+plt.rcParams["font.size"] = 10  # 默认字体大小
+plt.rcParams["axes.titlesize"] = 10  # 标题字体大小
+plt.rcParams["axes.labelsize"] = 10  # 坐标轴标签字体大小
+plt.rcParams["xtick.labelsize"] = 10  # X轴刻度标签字体大小
+plt.rcParams["ytick.labelsize"] = 10  # Y轴刻度标签字体大小
+plt.rcParams["legend.fontsize"] = 10  # 图例字体大小
 
 #%%
 # 模型基础参数设置
@@ -16,25 +25,25 @@ ux4 = 0.1
 ua    = 1.2
 ub    = 0.1
 uc    = 0.5
-ud    = 1.72
-ue    = np.pi/10
-uk0   = 0.1
-uk1   = -5
-utao0 = 0.5
+ud    = -1.72
+ue    = np.pi/6
+uk0   = 1
+uk1   = -10
+utao0 = 1
 utao1 = 0.5
 # parameters = [ua,ub,uc,ud,ue,uk0,uk1,utao0,utao1]
 parameters_init = np.array(( ux1,ux2,ux3,ux4,ua,ub,uc,ud,ue,uk0,uk1,utao0,utao1 ))
 
 # 相关控制参数
-param_var_range_start = -2.5
-param_var_range_end = 2.5
+param_var_range_start = -1.5
+param_var_range_end = 1.5
 param_var_range = np.linspace(param_var_range_start,param_var_range_end,300)
 state_plot_range = np.linspace(param_var_range_start,param_var_range_end,5)
-param_seqnum = 4
+param_seqnum = 6
 y_points = 200
 dropped_steps = 2000
 chaotic_dim_num = 4
-n_iterations = 8000
+n_iterations = 5000
 
 # xiangweitu huizhi
 # 控制参数
@@ -53,7 +62,7 @@ xtate1_list = state_list[:,1].flatten()
 xtate2_list = state_list[:,2].flatten()
 xtate3_list = state_list[:,3].flatten()
 
-fig, ((ax1, ax2),(ax3, ax4)) = plt.subplots(2, 2, figsize=(10, 6))
+fig, ((ax1, ax2),(ax3, ax4)) = plt.subplots(2, 2, figsize=(15/2.54, 9/2.54))
 ax1.plot( xtate0_list,xtate1_list, "r,")
 ax1.set_title("Diagram:x",fontsize=plt_sub_title_fontsize)
 # ax1.set_xlim(param_var_range[0], param_var_range[-1] )
@@ -92,7 +101,7 @@ for k in range(len(state_plot_range)):
     xtate2_list = state_list[:,2].flatten()
     xtate3_list = state_list[:,3].flatten()
 
-    fig, ((ax1, ax2),(ax3, ax4)) = plt.subplots(2, 2, figsize=(10, 6))
+    fig, ((ax1, ax2),(ax3, ax4)) = plt.subplots(2, 2, figsize=(15/2.54, 9/2.54))
     ax1.plot( xtate0_list,xtate1_list, "r,")
     ax1.set_title("Diagram:x",fontsize=plt_sub_title_fontsize)
     # ax1.set_xlim(param_var_range[0], param_var_range[-1] )
@@ -136,7 +145,7 @@ y2_list = y_list[:,:,2].flatten()
 y3_list = y_list[:,:,3].flatten()
 
 # 绘制分岔图
-fig, ((ax1, ax2),(ax3, ax4)) = plt.subplots(2, 2, figsize=(10, 6))
+fig, ((ax1, ax2),(ax3, ax4)) = plt.subplots(2, 2, figsize=(15/2.54, 9/2.54))
 ax1.plot( para_list,y0_list, "r,")
 ax1.set_title("Bifurcation Diagram:x",fontsize=plt_sub_title_fontsize)
 ax1.set_xlim(param_var_range[0], param_var_range[-1] )
@@ -180,7 +189,7 @@ lya_list1 = [arr[1] for arr in lya_list]
 lya_list2 = [arr[2] for arr in lya_list]
 lya_list3 = [arr[3] for arr in lya_list]
 
-fig, ( ax1 ) = plt.subplots(1, 1, figsize=(9, 6))
+fig, ( ax1 ) = plt.subplots(1, 1, figsize=(15/2.54, 9/2.54))
 
 
 l0, = ax1.plot(param_var_range, lya_list0, "r-", linewidth=1, label = 'LE1')
